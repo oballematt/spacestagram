@@ -16,8 +16,28 @@ body {
   color: #1a1a1a;
 }
 
-.sidebar-container h3 {
+.sidebar-container footer {
   margin-top: 25%;
+}
+
+.disclaimer{
+  color: white
+}
+
+.sidebar-container footer i, .disclaimer{
+  display: inline-block;
+}
+
+.sidebar-container footer a{
+  color: black
+}
+
+.sidebar-container footer i:hover{
+  cursor: pointer;
+}
+
+.links{
+  margin-left: 10px
 }
 
 .image-container {
@@ -155,7 +175,7 @@ body {
 }
 
 @media (min-width: 2000px) {
-  .sidebar-container h3 {
+  .sidebar-container footer {
     margin-top: 100%;
   }
 }
