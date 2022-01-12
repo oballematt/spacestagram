@@ -20,8 +20,7 @@ body {
   padding-left: 500px;
 }
 
-.sidebar-container ul li {
-  width: 100%;
+.image-container ul li {
   background-color: rgba(0, 7, 111, 0.8);
   color: white;
 }
@@ -35,12 +34,26 @@ body {
   margin-left: 100px;
 }
 
+.queryOptions{
+  margin: 0 auto;
+  width: 90%;
+}
+
 .imageRows img{
   height: 300px
 }
 
-@media (max-width: 2000px) {
+@media (min-width: 2000px) {
   .imageRows img{
     height: 400px
+  }
+}
+
+@media (min-width: 2000px) {
+  body{
+    background-image: url("/images/galaxy.jpg");
+    background-repeat: repeat-y;
+    background-size: 100% 1500px;
+    background-position: bottom 45%;
   }
 }

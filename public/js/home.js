@@ -50,8 +50,11 @@ $(document).ready(() => {
     type: "get",
   }).then((response) => {
     console.log(response);
-    response.photos.forEach((img) => {
-      $(".imageRows").append(`
+    if (response.photos.length === 0) {
+      alert('nothing here')
+    } else {
+      response.photos.forEach((img) => {
+        $(".imageRows").append(`
       <div class="col">
         <div class="card shadow-sm">
             <img src=${img.img_src}>
@@ -68,7 +71,8 @@ $(document).ready(() => {
             </div>
         </div>
       </div>`);
-    });
+      });
+    }
   });
 
   $("#loadRoverImages").on("click", function () {
@@ -83,6 +87,9 @@ $(document).ready(() => {
       },
     }).then((response) => {
       console.log(response);
+      if (response.photos.length === 0){
+        $('.imageRows').append('<h4>Nothing here</h4>')
+      }
       response.photos.forEach((img) => {
         $(".imageRows").append(`
         <div class="col">
