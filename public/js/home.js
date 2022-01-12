@@ -49,6 +49,7 @@ $(document).ready(() => {
     url: "/images-default",
     type: "get",
   }).then((response) => {
+    const idArr = []
     $(".lds-roller").hide();
     $(".imageCriteria").show();
     console.log(response);
@@ -56,6 +57,7 @@ $(document).ready(() => {
       alert("nothing here");
     } else {
       response.photos.forEach((img) => {
+        idArr.push(`img-${img.id}`)
         $(".imageRows").append(`
       <div class="col">
         <div class="card shadow-sm">
@@ -65,7 +67,7 @@ $(document).ready(() => {
                 <p class="card-text">${img.camera.full_name}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                    <button type="button" class="btn btn-outline-danger like-btn">Like</button>
+                    <button id=img-${img.id} type="button" class="btn btn-outline-danger like-btn">Like</button>
                     </div>
                     <small class="text-muted">${img.earth_date}</small>
                 </div> 
@@ -78,12 +80,23 @@ $(document).ready(() => {
         </div>
       </div>`);
       });
-      $(".like-btn").on("click", () => {
-        alert("liked");
+      console.log(idArr)
+      $(".like-btn").on("click", function () {
+        $(this).css('background-color', 'green')
+        let id = $(this).attr('id')
+        localStorage.setItem(id, id)
       });
+      idArr.forEach((id) => {
+        const likeId = localStorage.getItem(id)
+
+        console.log(likeId)
+
+        if (likeId === id) {
+          $(`#${id}`).css('background-color', 'green')
+        }
+      })
     }
   });
-
   $("#loadRoverImages").on("click", function () {
     $(".imageRows").empty();
     $(".lds-roller").show();
