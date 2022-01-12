@@ -1,0 +1,35 @@
+body {
+  background-image: url("/images/galaxy.jpg");
+  background-repeat: repeat-y;
+  background-size: 100% 1000px;
+  background-position: bottom 45%;
+}
+
+.sidebar-container {
+  position: fixed;
+  width: 500px;
+  height: 100%;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: rgb(89,40,177);
+  color: #1a1a1a;
+}
+
+.image-container {
+  padding-left: 500px;
+}
+
+.sidebar-container ul li {
+  width: 100%;
+  background-color: rgba(0, 7, 111, .8);
+  color: white
+}
+
+.card{
+  background-color: #5928B1;
+  color: white
+}
+.logo{
+  margin-left: 100px
+}

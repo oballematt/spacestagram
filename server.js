@@ -30,6 +30,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/', require('./routes/apodRoute'))
+app.use('/', require('./routes/marsRoverRoute'))
+
 app.get("/", (req, res) =>
   res.render("home")
 );

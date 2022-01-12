@@ -1,1 +1,58 @@
-<h1>hello</h1>
+<aside class="sidebar-container">
+    <img class='logo' src='../images/logo.jpg' />
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">Current Rover:</div>
+                <div class="roverSubhead text-end">
+                    Curiosity
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">Current Camera:</div>
+                <div class="cameraSubhead text-end">
+                    All
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">Current Date:</div>
+                <div class="dateSubhead text-end">
+
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="queryOptions">
+        <select id="roverOptions" class="form-select mt-3" aria-label="Default select example">
+            <option selected disabled>Select a rover </option>
+            <option>Curiosity</option>
+            <option>Opportunity</option>
+            <option>Spirit</option>
+        </select>
+        <select id="cameraOptions" class="form-select mt-3" aria-label="Default select example">
+            <option selected disabled>Select a rover to see camera options</option>
+        </select>
+        <div class="input-group flex-nowrap mt-3">
+            <span style='width: 130px' class="input-group-text" id="addon-wrapping">Date Selection:</span>
+            <input id='date' autocomplete="off" type="text" class="form-control datepicker disabled modelStart"
+                placeholder="yyyy/mm/dd" aria-label="Model Start Date" aria-describedby="addon-wrapping">
+        </div>
+        <button id="loadRoverImages" type="button" class='btn btn-primary mt-4 w-100'>Load Images</button>
+    </div>
+</aside>
+<main class='image-container'>
+    <div class="py-5">
+        <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 imageRows">
+            </div>
+        </div>
+    </div>
+</main>
+
+<div style="width: 50%; margin-left: auto; margin-right: auto " class="potdContainer">
+</div>
+<button id="loadPictures" type="button" class='btn btn-primary'>Get Pictures</button>
