@@ -49,9 +49,11 @@ $(document).ready(() => {
     url: "/images-default",
     type: "get",
   }).then((response) => {
+    $(".lds-roller").hide();
+    $(".imageCriteria").show();
     console.log(response);
     if (response.photos.length === 0) {
-      alert('nothing here')
+      alert("nothing here");
     } else {
       response.photos.forEach((img) => {
         $(".imageRows").append(`
@@ -77,6 +79,7 @@ $(document).ready(() => {
 
   $("#loadRoverImages").on("click", function () {
     $(".imageRows").empty();
+    $(".lds-roller").show();
     $.ajax({
       url: "/images-by-camera",
       type: "GET",
@@ -87,11 +90,15 @@ $(document).ready(() => {
       },
     }).then((response) => {
       console.log(response);
-      if (response.photos.length === 0){
-        $('.imageRows').append('<h4>Nothing here</h4>')
-      }
-      response.photos.forEach((img) => {
-        $(".imageRows").append(`
+      $(".lds-roller").hide();
+      $('.roverSubhead').text($('#roverOptions').val())
+      $('.cameraSubhead').text($('#cameraOptions').val())
+      $('.dateSubhead').text($('#date').val())
+      if (response.photos.length === 0) {
+        $(".imageRows").append("<h4>Nothing here</h4>");
+      } else {
+        response.photos.forEach((img) => {
+          $(".imageRows").append(`
         <div class="col">
           <div class="card shadow-sm">
               <img src=${img.img_src}>
@@ -108,7 +115,8 @@ $(document).ready(() => {
               </div>
           </div>
         </div>`);
-      });
+        });
+      }
     });
   });
 });

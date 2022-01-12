@@ -1,8 +1,11 @@
 <aside class="sidebar-container">
     <img class='logo' src='../images/logo.jpg' />
-    <h2 class='text-center text-white mb-3'>Welcome to Spacestagram!</h2>
-    <h5 class='text-center text-white mb-3'>The out of this world image collection app that shows you real photos collected from the rovers during their missions on Mars!</h5>
-    <h5 class='text-center text-white'>To get started, select a rover, a camera and a date below</h5>
+    <header>
+        <h2 class='text-center text-white mb-3'>Welcome to Spacestagram!</h2>
+        <h5 class='text-center text-white mb-3'>The out of this world image collection app that shows you real photos
+            collected from the rovers during their missions on Mars!</h5>
+        <h5 class='text-center text-white'>To get started, select a rover, a camera and a date below</h5>
+    </header>
     <div class="queryOptions mt-5">
         <div class="input-group">
             <label class="input-group-text mt-3" for="roverOptions">Rover:</label>
@@ -25,40 +28,56 @@
                 placeholder="yyyy/mm/dd" aria-label="Model Start Date" aria-describedby="addon-wrapping">
         </div>
         <button id="loadRoverImages" type="button" class='btn btn-primary mt-4 w-100'>Load Images</button>
-        <h3 style="margin-top: 100%">Footer Placeholder</h3>
+        <footer>
+            <h3>Footer Placeholder</h3>
+        </footer>
     </div>
 </aside>
 <main class='image-container'>
-    <ul class="list-group list-group-horizontal">
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">Current Rover:</div>
-                <div class="roverSubhead text-end">
-                    Curiosity
+    <header class='imageCriteria' style='display: none'>
+        <h4 class='text-white'>You are viewing images from:</h4>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Rover:</div>
+                    <div class="roverSubhead text-end">
+                        Curiosity
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">Current Camera:</div>
-                <div class="cameraSubhead text-end">
-                    All
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Camera:</div>
+                    <div class="cameraSubhead text-end">
+                        All
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">Current Date:</div>
-                <div class="dateSubhead text-end">
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Date:</div>
+                    <div class="dateSubhead text-end">
 
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </header>
+    <figure class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </figure>
+
     <div class="py-5">
         <div class="container-fluid">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 imageRows">
-            </div>
+            <figure class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 imageRows">
+            </figure>
         </div>
     </div>
 </main>
