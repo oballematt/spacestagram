@@ -56,7 +56,7 @@ $(document).ready(() => {
     $(".imageCriteria").show();
     console.log(response);
     if (response.photos.length === 0) {
-      $('.imageContainer').append('<img src="../images/empty.jpg />"');
+      $(".imageContainer").append('<img src="../images/empty.jpg />"');
     } else {
       response.photos.forEach((img) => {
         idArr.push(`img-${img.id}`);
@@ -106,28 +106,36 @@ $(document).ready(() => {
       });
     }
     $("#loadRoverImages").on("click", function () {
-      $(".imageRows").empty();
-      $(".lds-roller").show();
-      $.ajax({
-        url: "/images-by-camera",
-        type: "POST",
-        data: {
-          rovers: $("#roverOptions").val(),
-          camera: $("#cameraOptions").val(),
-          date: $("#date").val(),
-        },
-      }).then((response) => {
-        console.log(response);
-        $(".lds-roller").hide();
-        $(".roverSubhead").text($("#roverOptions").val());
-        $(".cameraSubhead").text($("#cameraOptions").val());
-        $(".dateSubhead").text($("#date").val());
-        if (response.photos.length === 0) {
-          $('.imageRows').append('<img class="empty" src="./images/empty.jpg" />')
-        } else {
-          response.photos.forEach((img) => {
-            idArr.push(`img-${img.id}`);
-            $(".imageRows").append(`
+      const rovers = $("#roverOptions").val();
+      const camera = $("#cameraOptions").val();
+      const date = $("#date").val();
+      if (rovers === "" || camera === "" || date === "") {
+        alert("Please select a Rover, a Camera and a Date.");
+      } else {
+        $(".imageRows").empty();
+        $(".lds-roller").show();
+        $.ajax({
+          url: "/images-by-camera",
+          type: "POST",
+          data: {
+            rovers,
+            camera,
+            date,
+          },
+        }).then((response) => {
+          console.log(response);
+          $(".lds-roller").hide();
+          $(".roverSubhead").text(rovers);
+          $(".cameraSubhead").text(camera);
+          $(".dateSubhead").text(date);
+          if (response.photos.length === 0) {
+            $(".imageRows").append(
+              '<img class="empty" src="./images/empty.jpg" />'
+            );
+          } else {
+            response.photos.forEach((img) => {
+              idArr.push(`img-${img.id}`);
+              $(".imageRows").append(`
             <div class="col">
             <div class="card shadow-sm">
                 <img src=${img.img_src}>
@@ -148,31 +156,35 @@ $(document).ready(() => {
                 </div>     
             </div>
           </div>`);
-          });
-          $(".like-btn").on("click", function () {
-            let id = $(this).attr("id");
-            if ($(this).hasClass("liked")) {
-              $(this).css({ "background-color": "transparent", color: "red" });
-              $(this).html("Like");
-              localStorage.removeItem(id);
-            } else {
-              $(this).css({ "background-color": "red", color: "white" });
-              $(this).html("Liked");
-              $(this).addClass("liked");
+            });
+            $(".like-btn").on("click", function () {
+              let id = $(this).attr("id");
+              if ($(this).hasClass("liked")) {
+                $(this).css({
+                  "background-color": "transparent",
+                  color: "red",
+                });
+                $(this).html("Like");
+                localStorage.removeItem(id);
+              } else {
+                $(this).css({ "background-color": "red", color: "white" });
+                $(this).html("Liked");
+                $(this).addClass("liked");
 
-              localStorage.setItem(id, id);
-            }
-          });
-          idArr.forEach((id) => {
-            const likeId = localStorage.getItem(id);
-            if (likeId === id) {
-              $(`#${id}`).css({ "background-color": "red", color: "white" });
-              $(`#${id}`).html("Liked");
-              $(`#${id}`).addClass("liked");
-            }
-          });
-        }
-      });
+                localStorage.setItem(id, id);
+              }
+            });
+            idArr.forEach((id) => {
+              const likeId = localStorage.getItem(id);
+              if (likeId === id) {
+                $(`#${id}`).css({ "background-color": "red", color: "white" });
+                $(`#${id}`).html("Liked");
+                $(`#${id}`).addClass("liked");
+              }
+            });
+          }
+        });
+      }
     });
   });
 });
