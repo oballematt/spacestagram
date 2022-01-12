@@ -23,6 +23,7 @@ $(document).ready(() => {
     switch (rover) {
       case "Curiosity":
         $("#cameraOptions").append(`
+      <option value="All">All Cameras</option>
       <option value="FHAZ">Front Hazard Avoidance Camera</option>
       <option value="RHAZ">Rear Hazard Avoidance Camera</option>
       <option value="MAST">Mast Camera</option>
@@ -35,6 +36,7 @@ $(document).ready(() => {
       case "Opportunity":
       case "Spirit":
         $("#cameraOptions").append(`
+      <option value="All">All Cameras</option>
       <option value="FHAZ">Front Hazard Avoidance Camera</option>
       <option value="RHAZ">Rear Hazard Avoidance Camera</option>
       <option value="NAVCAM">Navigation Camera</option>
@@ -107,7 +109,7 @@ $(document).ready(() => {
       $(".lds-roller").show();
       $.ajax({
         url: "/images-by-camera",
-        type: "GET",
+        type: "POST",
         data: {
           rovers: $("#roverOptions").val(),
           camera: $("#cameraOptions").val(),
