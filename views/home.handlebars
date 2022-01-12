@@ -41,7 +41,7 @@
     </div>
 </aside>
 <main class='image-container'>
-    <header class='imageCriteria' style='display: none'>
+    <header class='imageHeader' style='display: none'>
         <h4 class='text-white'>You are viewing images from:</h4>
         <ul class="list-group list-group-horizontal">
             <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -64,11 +64,15 @@
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">Date:</div>
                     <div class="dateSubhead text-end">
-
                     </div>
                 </div>
             </li>
         </ul>
+        <section style="margin-left: 45%;" class="btn-group" role="group" aria-label="Basic outlined example">
+            <button style='background-color:#5928B1' type="button" class="btn btn-outline-primary text-white roverImages">Rover
+                Images</button>
+            <button type="button" class="btn btn-outline-primary text-white profile">Profile</button>
+        </section>
     </header>
     <figure class="lds-roller">
         <div></div>
@@ -81,12 +85,19 @@
         <div></div>
     </figure>
 
-    <div class="py-5">
+    <section class="py-5 imageSection">
         <div class="container-fluid">
             <figure class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 imageRows">
             </figure>
         </div>
-    </div>
+    </section>
+
+     <section class="py-5 profileSection">
+        <div class="container-fluid">
+            <figure class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+            </figure>
+        </div>
+    </section>
 </main>
 
 <div style="width: 50%; margin-left: auto; margin-right: auto " class="potdContainer">

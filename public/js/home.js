@@ -1,14 +1,4 @@
 $(document).ready(() => {
-  const today = new Date();
-  const yesterday = new Date(today);
-
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  today.toDateString();
-  console.log(yesterday.toISOString().slice(0, 10));
-
-  $(".dateSubhead").text(yesterday.toISOString().slice(0, 10));
-
   const dateInput = $(".datepicker");
 
   dateInput.datepicker({
@@ -16,8 +6,18 @@ $(document).ready(() => {
     dateFormat: "yy-mm-dd",
   });
 
+  const today = new Date();
+  const yesterday = new Date(today);
+
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  today.toDateString();
+
+  $(".dateSubhead").text(yesterday.toISOString().slice(0, 10));
+
   $("#roverOptions").on("change", () => {
     $("#cameraOptions").empty();
+
     let rover = $("#roverOptions").val();
 
     switch (rover) {
@@ -32,6 +32,7 @@ $(document).ready(() => {
       <option value="MARDI">Mars Descent Imager</option>
       <option value="NAVCAM">Navigation Camera</option>
       `);
+
         break;
       case "Opportunity":
       case "Spirit":
@@ -43,6 +44,7 @@ $(document).ready(() => {
       <option value="PANCAM">Panoramic Camera</option>
       <option value="MINITES">Miniature Thermal Emission Spectrometer (Mini-TES)</option>
       `);
+
         break;
     }
   });
@@ -53,8 +55,18 @@ $(document).ready(() => {
   }).then((response) => {
     const idArr = [];
     $(".lds-roller").hide();
-    $(".imageCriteria").show();
-    console.log(response);
+    $(".imageHeader").show();
+    $(".roverImages").on("click", function () {
+      $(this).css("background-color", "#5928B1");
+      $(".profile").css({ "background-color": "transparent", color: "white" });
+    });
+    $(".profile").on("click", function () {
+      $(this).css("background-color", "#5928B1");
+      $(".roverImages").css({
+        "background-color": "transparent",
+        color: "white",
+      });
+    });
     if (response.photos.length === 0) {
       $(".imageContainer").append('<img src="../images/empty.jpg />"');
     } else {
@@ -69,7 +81,7 @@ $(document).ready(() => {
                 <p class="card-text">${img.camera.full_name}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                    <button id=img-${img.id} type="button" class="btn btn-outline-danger like-btn">Like</button>
+                    <button id=img-${img.id} data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn">Like</button>
                     </div>
                     <small class="text-muted">${img.earth_date}</small>
                 </div> 
@@ -82,26 +94,35 @@ $(document).ready(() => {
         </div>
       </div>`);
       });
+
       $(".like-btn").on("click", function () {
         let id = $(this).attr("id");
+        let url = $(this).attr("data-url");
+        let items = {
+          id: id,
+          url: url,
+        };
         if ($(this).hasClass("liked")) {
           $(this).css({ "background-color": "transparent", color: "red" });
           $(this).html("Like");
+          $(this).removeClass("liked");
           localStorage.removeItem(id);
         } else {
           $(this).css({ "background-color": "red", color: "white" });
           $(this).html("Liked");
           $(this).addClass("liked");
 
-          localStorage.setItem(id, id);
+          localStorage.setItem(id, JSON.stringify(items));
         }
       });
       idArr.forEach((id) => {
-        const likeId = localStorage.getItem(id);
-        if (likeId === id) {
-          $(`#${id}`).css({ "background-color": "red", color: "white" });
-          $(`#${id}`).html("Liked");
-          $(`#${id}`).addClass("liked");
+        let likeId = JSON.parse(localStorage.getItem(id));
+        if (likeId !== null) {
+          if (likeId.id === id) {
+            $(`#${id}`).css({ "background-color": "red", color: "white" });
+            $(`#${id}`).html("Liked");
+            $(`#${id}`).addClass("liked");
+          }
         }
       });
     }
@@ -123,7 +144,6 @@ $(document).ready(() => {
             date,
           },
         }).then((response) => {
-          console.log(response);
           $(".lds-roller").hide();
           $(".roverSubhead").text(rovers);
           $(".cameraSubhead").text(camera);
@@ -144,7 +164,7 @@ $(document).ready(() => {
                     <p class="card-text">${img.camera.full_name}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                        <button id=img-${img.id} type="button" class="btn btn-outline-danger like-btn">Like</button>
+                        <button id=img-${img.id} data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn">Like</button>
                         </div>
                         <small class="text-muted">${img.earth_date}</small>
                     </div> 
@@ -159,11 +179,19 @@ $(document).ready(() => {
             });
             $(".like-btn").on("click", function () {
               let id = $(this).attr("id");
+              let url = $(this).attr("data-url");
+              let items = {
+                id: id,
+                url: url,
+              };
               if ($(this).hasClass("liked")) {
                 $(this).css({
                   "background-color": "transparent",
                   color: "red",
                 });
+
+                $(this).removeClass("liked");
+
                 $(this).html("Like");
                 localStorage.removeItem(id);
               } else {
@@ -171,15 +199,20 @@ $(document).ready(() => {
                 $(this).html("Liked");
                 $(this).addClass("liked");
 
-                localStorage.setItem(id, id);
+                localStorage.setItem(id, JSON.stringify(items));
               }
             });
             idArr.forEach((id) => {
-              const likeId = localStorage.getItem(id);
-              if (likeId === id) {
-                $(`#${id}`).css({ "background-color": "red", color: "white" });
-                $(`#${id}`).html("Liked");
-                $(`#${id}`).addClass("liked");
+              let likeId = JSON.parse(localStorage.getItem(id));
+              if (likeId !== null) {
+                if (likeId.id === id) {
+                  $(`#${id}`).css({
+                    "background-color": "red",
+                    color: "white",
+                  });
+                  $(`#${id}`).html("Liked");
+                  $(`#${id}`).addClass("liked");
+                }
               }
             });
           }
