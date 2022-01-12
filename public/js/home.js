@@ -40,7 +40,7 @@ $(document).ready(() => {
       <option value="FHAZ">Front Hazard Avoidance Camera</option>
       <option value="RHAZ">Rear Hazard Avoidance Camera</option>
       <option value="NAVCAM">Navigation Camera</option>
-      <option value="PANAM">Panoramic Camera</option>
+      <option value="PANCAM">Panoramic Camera</option>
       <option value="MINITES">Miniature Thermal Emission Spectrometer (Mini-TES)</option>
       `);
         break;
@@ -85,11 +85,11 @@ $(document).ready(() => {
       $(".like-btn").on("click", function () {
         let id = $(this).attr("id");
         if ($(this).hasClass("liked")) {
-          $(this).css("background-color", "transparent");
+          $(this).css({ "background-color": "transparent", color: "red" });
           $(this).html("Like");
           localStorage.removeItem(id);
         } else {
-          $(this).css("background-color", "green");
+          $(this).css({ "background-color": "red", color: "white" });
           $(this).html("Liked");
           $(this).addClass("liked");
 
@@ -99,8 +99,9 @@ $(document).ready(() => {
       idArr.forEach((id) => {
         const likeId = localStorage.getItem(id);
         if (likeId === id) {
-          $(`#${id}`).css("background-color", "green");
-          $(`#${id}`).html("liked");
+          $(`#${id}`).css({ "background-color": "red", color: "white" });
+          $(`#${id}`).html("Liked");
+          $(`#${id}`).addClass("liked");
         }
       });
     }
@@ -116,7 +117,6 @@ $(document).ready(() => {
           date: $("#date").val(),
         },
       }).then((response) => {
-        const idRoverArr = [];
         console.log(response);
         $(".lds-roller").hide();
         $(".roverSubhead").text($("#roverOptions").val());
@@ -126,6 +126,7 @@ $(document).ready(() => {
           $(".imageRows").append("<h4>Nothing here</h4>");
         } else {
           response.photos.forEach((img) => {
+            idArr.push(`img-${img.id}`);
             $(".imageRows").append(`
             <div class="col">
             <div class="card shadow-sm">
@@ -151,11 +152,11 @@ $(document).ready(() => {
           $(".like-btn").on("click", function () {
             let id = $(this).attr("id");
             if ($(this).hasClass("liked")) {
-              $(this).css("background-color", "transparent");
+              $(this).css({ "background-color": "transparent", color: "red" });
               $(this).html("Like");
               localStorage.removeItem(id);
             } else {
-              $(this).css("background-color", "green");
+              $(this).css({ "background-color": "red", color: "white" });
               $(this).html("Liked");
               $(this).addClass("liked");
 
@@ -165,7 +166,9 @@ $(document).ready(() => {
           idArr.forEach((id) => {
             const likeId = localStorage.getItem(id);
             if (likeId === id) {
-              $(`#${id}`).css("background-color", "green");
+              $(`#${id}`).css({ "background-color": "red", color: "white" });
+              $(`#${id}`).html("Liked");
+              $(`#${id}`).addClass("liked");
             }
           });
         }
