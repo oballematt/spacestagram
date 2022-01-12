@@ -11,6 +11,12 @@ body {
   background-position: bottom 45%;
 }
 
+.imageRows .empty {
+  margin: 0 auto;
+  width: 900px;
+  height: 750px;
+}
+
 .sidebar-container {
   position: fixed;
   width: 500px;
@@ -194,5 +200,13 @@ body {
     background-repeat: repeat-y;
     background-size: 100% 1500px;
     background-position: bottom 45%;
+  }
+}
+
+@media (min-width: 2000px) {
+  .imageRows .empty {
+    margin: 0 auto;
+    width: 1500px;
+    height: 1000px;
   }
 }

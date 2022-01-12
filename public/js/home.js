@@ -56,7 +56,7 @@ $(document).ready(() => {
     $(".imageCriteria").show();
     console.log(response);
     if (response.photos.length === 0) {
-      alert("nothing here");
+      $('.imageContainer').append('<img src="../images/empty.jpg />"');
     } else {
       response.photos.forEach((img) => {
         idArr.push(`img-${img.id}`);
@@ -123,7 +123,7 @@ $(document).ready(() => {
         $(".cameraSubhead").text($("#cameraOptions").val());
         $(".dateSubhead").text($("#date").val());
         if (response.photos.length === 0) {
-          $(".imageRows").append("<h4>Nothing here</h4>");
+          $('.imageRows').append('<img class="empty" src="./images/empty.jpg" />')
         } else {
           response.photos.forEach((img) => {
             idArr.push(`img-${img.id}`);
