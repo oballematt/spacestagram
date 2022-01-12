@@ -65,8 +65,7 @@ $(document).ready(() => {
                 <p class="card-text">${img.camera.full_name}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-outline-danger like-btn">Like</button>
                     </div>
                     <small class="text-muted">${img.earth_date}</small>
                 </div> 
@@ -78,6 +77,9 @@ $(document).ready(() => {
             </div>     
         </div>
       </div>`);
+      });
+      $(".like-btn").on("click", () => {
+        alert("liked");
       });
     }
   });
