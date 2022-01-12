@@ -43,6 +43,12 @@ body {
   height: 300px
 }
 
+.imageRows h4{
+  color: white;
+  margin-top: 25%;
+  margin-left: 50%;
+}
+
 @media (min-width: 2000px) {
   .imageRows img{
     height: 400px
