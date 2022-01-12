@@ -81,17 +81,24 @@ $(document).ready(() => {
       </div>`);
       });
       $(".like-btn").on("click", function () {
-        $(this).css("background-color", "green");
         let id = $(this).attr("id");
-        localStorage.setItem(id, id);
+        if ($(this).hasClass("liked")) {
+          $(this).css("background-color", "transparent");
+          $(this).html("Like");
+          localStorage.removeItem(id);
+        } else {
+          $(this).css("background-color", "green");
+          $(this).html("Liked");
+          $(this).addClass("liked");
+
+          localStorage.setItem(id, id);
+        }
       });
       idArr.forEach((id) => {
         const likeId = localStorage.getItem(id);
-
-        console.log(likeId);
-
         if (likeId === id) {
           $(`#${id}`).css("background-color", "green");
+          $(`#${id}`).html("liked");
         }
       });
     }
@@ -140,15 +147,21 @@ $(document).ready(() => {
           </div>`);
           });
           $(".like-btn").on("click", function () {
-            $(this).css("background-color", "green");
             let id = $(this).attr("id");
-            localStorage.setItem(id, id);
+            if ($(this).hasClass("liked")) {
+              $(this).css("background-color", "transparent");
+              $(this).html("Like");
+              localStorage.removeItem(id);
+            } else {
+              $(this).css("background-color", "green");
+              $(this).html("Liked");
+              $(this).addClass("liked");
+
+              localStorage.setItem(id, id);
+            }
           });
           idArr.forEach((id) => {
             const likeId = localStorage.getItem(id);
-
-            console.log(likeId);
-
             if (likeId === id) {
               $(`#${id}`).css("background-color", "green");
             }
