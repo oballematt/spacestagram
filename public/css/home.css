@@ -16,28 +16,33 @@ body {
   color: #1a1a1a;
 }
 
+.sidebar-container header {
+  font-family: "Dosis", sans-serif;
+}
+
 .sidebar-container footer {
-  margin-top: 25%;
+  margin-top: 35%;
 }
 
-.disclaimer{
-  color: white
+.disclaimer {
+  color: white;
 }
 
-.sidebar-container footer i, .disclaimer{
+.sidebar-container footer i,
+.disclaimer {
   display: inline-block;
 }
 
-.sidebar-container footer a{
-  color: black
+.sidebar-container footer a {
+  color: black;
 }
 
-.sidebar-container footer i:hover{
+.sidebar-container footer i:hover {
   cursor: pointer;
 }
 
-.links{
-  margin-left: 10px
+.links {
+  margin-left: 10px;
 }
 
 .image-container {
@@ -176,7 +181,7 @@ body {
 
 @media (min-width: 2000px) {
   .sidebar-container footer {
-    margin-top: 100%;
+    margin-top: 110%;
   }
 }
 

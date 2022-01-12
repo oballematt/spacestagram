@@ -61,7 +61,7 @@ $(document).ready(() => {
         <div class="card shadow-sm">
             <img src=${img.img_src}>
             <div class="card-body">
-            <h5 class="card-title">${img.rover.name}</h5>
+              <h5 class="card-title">${img.rover.name}</h5>
                 <p class="card-text">${img.camera.full_name}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
@@ -69,8 +69,13 @@ $(document).ready(() => {
                         <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                     </div>
                     <small class="text-muted">${img.earth_date}</small>
-                </div>
+                </div> 
             </div>
+            <div class='card-footer'>
+            <h6>Share to:</h6>
+              <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${img.img_src}"><i class="fab fa-facebook fa-2x"></i></a>
+              <a target="_blank" href="https://twitter.com/share?url=${img.img_src}"><i class="fab fa-twitter fa-2x"></i></a>
+            </div>     
         </div>
       </div>`);
       });
@@ -91,9 +96,9 @@ $(document).ready(() => {
     }).then((response) => {
       console.log(response);
       $(".lds-roller").hide();
-      $('.roverSubhead').text($('#roverOptions').val())
-      $('.cameraSubhead').text($('#cameraOptions').val())
-      $('.dateSubhead').text($('#date').val())
+      $(".roverSubhead").text($("#roverOptions").val());
+      $(".cameraSubhead").text($("#cameraOptions").val());
+      $(".dateSubhead").text($("#date").val());
       if (response.photos.length === 0) {
         $(".imageRows").append("<h4>Nothing here</h4>");
       } else {
@@ -112,6 +117,7 @@ $(document).ready(() => {
                       </div>
                       <small class="text-muted">${img.earth_date}</small>
                   </div>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=${img.img_src}" class='share-btn facebook'>Facebook</a>
               </div>
           </div>
         </div>`);
