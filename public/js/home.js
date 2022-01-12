@@ -1,12 +1,13 @@
 $(document).ready(() => {
-  let today = new Date();
-  let dd = String(today.getDate()).padStart(2, "0");
-  let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  let yyyy = today.getFullYear();
+  const today = new Date();
+  const yesterday = new Date(today);
 
-  today = yyyy + "-" + mm + "-" + dd;
+  yesterday.setDate(yesterday.getDate() - 1);
 
-  $('.dateSubhead').text(today)
+  today.toDateString();
+  console.log(yesterday.toISOString().slice(0, 10));
+
+  $(".dateSubhead").text(yesterday.toISOString().slice(0, 10));
 
   const dateInput = $(".datepicker");
 
@@ -53,7 +54,7 @@ $(document).ready(() => {
       $(".imageRows").append(`
       <div class="col">
         <div class="card shadow-sm">
-            <img style="height: 300px" src=${img.img_src}>
+            <img src=${img.img_src}>
             <div class="card-body">
             <h5 class="card-title">${img.rover.name}</h5>
                 <p class="card-text">${img.camera.full_name}</p>

@@ -15,15 +15,16 @@ module.exports = {
   },
 
   getDefaultImages: async (req, res) => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-  
-    today = yyyy + '-' + mm + '-' + dd 
+    const today = new Date();
+    const yesterday = new Date(today);
+
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    today.toDateString();
+    
 
     try {
-      const roverPictures = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${today}&api_key=${process.env.APIKEY}`;
+      const roverPictures = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${yesterday.toISOString().slice(0, 10)}&api_key=${process.env.APIKEY}`;
       const response = await axios.get(roverPictures);
       return res.json(response.data);
     } catch (error) {

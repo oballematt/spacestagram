@@ -12,7 +12,7 @@ body {
   left: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  background: rgb(89,40,177);
+  background: rgb(89, 40, 177);
   color: #1a1a1a;
 }
 
@@ -22,14 +22,25 @@ body {
 
 .sidebar-container ul li {
   width: 100%;
-  background-color: rgba(0, 7, 111, .8);
-  color: white
+  background-color: rgba(0, 7, 111, 0.8);
+  color: white;
 }
 
-.card{
-  background-color: #5928B1;
-  color: white
+.card {
+  background-color: #5928b1;
+  color: white;
 }
-.logo{
-  margin-left: 100px
+
+.logo {
+  margin-left: 100px;
+}
+
+.imageRows img{
+  height: 300px
+}
+
+@media (max-width: 2000px) {
+  .imageRows img{
+    height: 400px
+  }
 }
