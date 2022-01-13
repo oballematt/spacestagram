@@ -78,7 +78,7 @@ $(document).ready(() => {
                 <p class="card-text">${img.camera.full_name}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                    <button id=img-${img.id} data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn">Like</button>
+                    <button  id=img-${img.id} data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></i></button>
                     </div>
                     <small class="text-muted">${img.earth_date}</small>
                 </div> 
@@ -101,13 +101,13 @@ $(document).ready(() => {
         };
         if ($(this).hasClass("liked")) {
           $(this).css({ "background-color": "transparent", color: "red" });
-          $(this).html("Like");
-          $(this).removeClass("liked");
+          $(this).html('<i class="far fa-heart">');
+          $(this).removeClass("liked spin");
           localStorage.removeItem(id);
         } else {
           $(this).css({ "background-color": "red", color: "white" });
-          $(this).html("Liked");
-          $(this).addClass("liked");
+          $(this).html('<i class="fas fa-heart"></i>');
+          $(this).addClass("liked spin");
 
           localStorage.setItem(id, JSON.stringify(items));
         }
@@ -117,7 +117,7 @@ $(document).ready(() => {
         if (likeId !== null) {
           if (likeId.id === id) {
             $(`#${id}`).css({ "background-color": "red", color: "white" });
-            $(`#${id}`).html("Liked");
+            $(`#${id}`).html('<i class="fas fa-heart"></i>');
             $(`#${id}`).addClass("liked");
           }
         }
@@ -161,7 +161,7 @@ $(document).ready(() => {
                     <p class="card-text">${img.camera.full_name}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                        <button id=img-${img.id} data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn">Like</button>
+                        <button  id=img-${img.id} data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
                         </div>
                         <small class="text-muted">${img.earth_date}</small>
                     </div> 
@@ -186,14 +186,12 @@ $(document).ready(() => {
                   "background-color": "transparent",
                   color: "red",
                 });
-
+                $(this).html('<i class="far fa-heart">');
                 $(this).removeClass("liked");
-
-                $(this).html("Like");
                 localStorage.removeItem(id);
               } else {
                 $(this).css({ "background-color": "red", color: "white" });
-                $(this).html("Liked");
+                $(this).html('<i class="fas fa-heart"></i>');
                 $(this).addClass("liked");
 
                 localStorage.setItem(id, JSON.stringify(items));
@@ -207,7 +205,9 @@ $(document).ready(() => {
                     "background-color": "red",
                     color: "white",
                   });
-                  $(`#${id}`).html("Liked");
+                  $(`#${id}`).html(
+                    '<i class="fas fa-heart"></i>'
+                  );
                   $(`#${id}`).addClass("liked");
                 }
               }
@@ -232,13 +232,13 @@ $(document).ready(() => {
     //                   <button id=img- data-url= type="button" class="btn btn-outline-danger like-btn">Like</button>
     //                   </div>
     //                   <small class="text-muted"></small>
-    //               </div> 
+    //               </div>
     //           </div>
     //           <div class='card-footer'>
     //           <h6>Share to:</h6>
     //             <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${imageId.url}"><i class="fab fa-facebook fa-2x"></i></a>
     //             <a target="_blank" href="https://twitter.com/share?url=${imageId.url}"><i class="fab fa-twitter fa-2x"></i></a>
-    //           </div>     
+    //           </div>
     //       </div>
     //     </div>`);
     //   }
