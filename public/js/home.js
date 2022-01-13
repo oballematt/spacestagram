@@ -187,12 +187,12 @@ $(document).ready(() => {
                   color: "red",
                 });
                 $(this).html('<i class="far fa-heart">');
-                $(this).removeClass("liked");
+                $(this).removeClass("liked spin");
                 localStorage.removeItem(id);
               } else {
                 $(this).css({ "background-color": "red", color: "white" });
                 $(this).html('<i class="fas fa-heart"></i>');
-                $(this).addClass("liked");
+                $(this).addClass("liked spin");
 
                 localStorage.setItem(id, JSON.stringify(items));
               }
@@ -205,9 +205,7 @@ $(document).ready(() => {
                     "background-color": "red",
                     color: "white",
                   });
-                  $(`#${id}`).html(
-                    '<i class="fas fa-heart"></i>'
-                  );
+                  $(`#${id}`).html('<i class="fas fa-heart"></i>');
                   $(`#${id}`).addClass("liked");
                 }
               }

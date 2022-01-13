@@ -11,7 +11,7 @@ body {
   background-position: bottom 45%;
 }
 
-.imageRows .empty {
+.roverImageRows .empty {
   margin: 0 auto;
   width: 900px;
   height: 750px;
@@ -70,11 +70,11 @@ body {
   color: white;
 }
 
-.imageRows img {
+.roverImageRows img {
   height: 300px;
 }
 
-.imageRows h4 {
+.roverImageRows h4 {
   color: white;
   margin-top: 25%;
   margin-left: 50%;
@@ -201,7 +201,7 @@ body {
 }
 
 @media (min-width: 2000px) {
-  .imageRows img {
+  .roverImageRows img {
     height: 400px;
   }
 }
@@ -222,7 +222,7 @@ body {
 }
 
 @media (min-width: 2000px) {
-  .imageRows .empty {
+  .roverImageRows .empty {
     margin: 0 auto;
     width: 1500px;
     height: 1000px;
