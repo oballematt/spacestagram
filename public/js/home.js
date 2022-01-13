@@ -56,14 +56,6 @@ $(document).ready(() => {
     const idArr = [];
     $(".lds-roller").hide();
     $(".imageHeader").show();
-    // $(".showRoverImages").on("click", function () {
-    //   $(".imageSection").show();
-    //   $(this).css("background-color", "#5928B1");
-    //   $(".showProfile").css({
-    //     "background-color": "transparent",
-    //     color: "white",
-    //   });
-    // });
     if (response.photos.length === 0) {
       $(".imageContainer").append('<img src="../images/empty.jpg />"');
     } else {
@@ -214,40 +206,5 @@ $(document).ready(() => {
         });
       }
     });
-    // idArr.forEach((id) => {
-    //   let imageId = JSON.parse(localStorage.getItem(id));
-    //   if (imageId !== null) {
-    //     console.log(imageId.id);
-    //     $(".profileImageRows").append(`
-    //       <div class="col">
-    //       <div class="card shadow-sm">
-    //           <img id=${imageId.id} src=${imageId.url}>
-    //           <div class="card-body">
-    //             <h5 class="card-title"></h5>
-    //               <p class="card-text"></p>
-    //               <div class="d-flex justify-content-between align-items-center">
-    //                   <div class="btn-group">
-    //                   <button id=img- data-url= type="button" class="btn btn-outline-danger like-btn">Like</button>
-    //                   </div>
-    //                   <small class="text-muted"></small>
-    //               </div>
-    //           </div>
-    //           <div class='card-footer'>
-    //           <h6>Share to:</h6>
-    //             <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${imageId.url}"><i class="fab fa-facebook fa-2x"></i></a>
-    //             <a target="_blank" href="https://twitter.com/share?url=${imageId.url}"><i class="fab fa-twitter fa-2x"></i></a>
-    //           </div>
-    //       </div>
-    //     </div>`);
-    //   }
-    // });
-    // $(".showProfile").on("click", function () {
-    //   $(".imageSection").hide();
-    //   $(this).css("background-color", "#5928B1");
-    //   $(".showRoverImages").css({
-    //     "background-color": "transparent",
-    //     color: "white",
-    //   });
-    // });
   });
 });
