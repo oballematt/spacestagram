@@ -148,6 +148,7 @@ $(document).ready(() => {
             date,
           },
         }).then((response) => {
+          console.log(response)
           $(".lds-roller").hide();
           $(".roverSubhead").text(rovers);
           $(".cameraSubhead").text(camera);
@@ -168,10 +169,11 @@ $(document).ready(() => {
                 <img src=${img.img_src}>
                 <div class="card-body">
                   <h5 class="card-title">${img.rover.name}</h5>
-                    <p class="card-text">${img.camera.full_name}</p>
+                    <p class="card-text fullName">${img.camera.full_name}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                        <button  id=img-${img.id} data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
+                        <button  id=img-${img.id} data-rover-name=${img.rover.name} name=${img.camera.full_name} data-rover-date=${img.earth_date}
+                        data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
                         </div>
                         <small class="text-muted">${img.earth_date}</small>
                     </div> 
@@ -192,10 +194,17 @@ $(document).ready(() => {
             $(".like-btn").on("click", function () {
               let id = $(this).attr("id");
               let url = $(this).attr("data-url");
+              let name = $(this).attr('data-rover-name')
+              let fullName = $(this).attr('name')
+              let date = $(this).attr('data-rover-date')
               let items = {
-                id: id,
-                url: url,
+                id,
+                url,
+                name,
+                fullName,
+                date
               };
+              console.log(fullName)
               if ($(this).hasClass("liked")) {
                 $(this).css({
                   "background-color": "transparent",
@@ -205,7 +214,6 @@ $(document).ready(() => {
                 $(this).removeClass("liked spin");
                 localStorage.removeItem(id);
               } else {
-                $(this).css({ "background-color": "red", color: "white" });
                 $(this).html('<i class="fas fa-heart"></i>');
                 $(this).addClass("liked spin");
                 $(".likedImages").append(`
@@ -213,13 +221,13 @@ $(document).ready(() => {
                 <div class="card shadow-sm">
                     <img src=${url}>
                     <div class="card-body">
-                      <h5 class="card-title">Title</h5>
-                        <p class="card-text">Title</p>
+                      <h5 class="card-title">${name}</h5>
+                        <p class="card-text">${fullName}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                             <button  id=img-title data-url=title type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
                             </div>
-                            <small class="text-muted">title</small>
+                            <small class="text-muted">${date}</small>
                         </div> 
                     </div>
                     <div class='card-footer'>
@@ -257,13 +265,13 @@ $(document).ready(() => {
       <div class="card shadow-sm">
           <img src=${images.url}>
           <div class="card-body">
-            <h5 class="card-title">Title</h5>
-              <p class="card-text">Title</p>
+            <h5 class="card-title">${images.name}</h5>
+              <p class="card-text">${images.fullName}</p>
               <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                  <button  id=img-title data-url=title type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
+                  <button type="button" class="btn btn-outline-danger like-btn liked"><i class="fas fa-heart"></i></button>
                   </div>
-                  <small class="text-muted">title</small>
+                  <small class="text-muted">${images.date}</small>
               </div> 
           </div>
           <div class='card-footer'>

@@ -83,7 +83,12 @@
   height: 300px;
 }
 
-.likedImage img {
+.liked{
+  background-color: red;
+  color: white;
+}
+
+.likedImages img {
   height: 300px;
 }
 
