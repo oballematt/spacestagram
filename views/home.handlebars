@@ -29,6 +29,10 @@
                 placeholder="yyyy/mm/dd" aria-label="Model Start Date" aria-describedby="addon-wrapping">
         </div>
         <button id="loadRoverImages" type="button" class='btn btn-primary mt-4 w-100'>Load Images</button>
+        <button type="button" class="btn btn-primary mt-5 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            View Your Images <span class='likedCount'></span>
+        </button>
+        
         <footer>
             <div class='disclaimer'>Logo created by <a style="color:white" href="https://www.designevo.com/"
                     title="Free Online Logo Maker">DesignEvo logo
@@ -70,9 +74,7 @@
                 </div>
             </li>
         </ul>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-        </button>
+        
         {{> likedImagesModal}}
     </header>
     <figure class="lds-roller">
@@ -93,4 +95,5 @@
             </figure>
         </div>
     </section>
+    
 </main>

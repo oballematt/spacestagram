@@ -148,7 +148,7 @@ $(document).ready(() => {
             date,
           },
         }).then((response) => {
-          console.log(response)
+          console.log(response);
           $(".lds-roller").hide();
           $(".roverSubhead").text(rovers);
           $(".cameraSubhead").text(camera);
@@ -169,10 +169,10 @@ $(document).ready(() => {
                 <img src=${img.img_src}>
                 <div class="card-body">
                   <h5 class="card-title">${img.rover.name}</h5>
-                    <p class="card-text fullName">${img.camera.full_name}</p>
+                    <p class="card-text">${img.camera.full_name}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                        <button  id=img-${img.id} data-rover-name=${img.rover.name} name=${img.camera.full_name} data-rover-date=${img.earth_date}
+                        <button id=img-${img.id} data-id=${img.id} data-rover-name=${img.rover.name} data-camera-name=${img.camera.name} data-rover-date=${img.earth_date}
                         data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
                         </div>
                         <small class="text-muted">${img.earth_date}</small>
@@ -191,42 +191,47 @@ $(document).ready(() => {
             //When the like button is clicked, it will apply the "like" and "spin" class, giving the button the styles and animation indicating that the picture has been liked.
             //It will also send the ID of the image to local storage. When the page is refreshed, all of the ID's of the images are displayed are compared to the ID's in localStorage
             //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image.
+            let imageCount = 0;
             $(".like-btn").on("click", function () {
               let id = $(this).attr("id");
+              let intId = $(this).attr('data-id')
               let url = $(this).attr("data-url");
-              let name = $(this).attr('data-rover-name')
-              let fullName = $(this).attr('name')
-              let date = $(this).attr('data-rover-date')
+              let name = $(this).attr("data-rover-name");
+              let cameraName = $(this).attr("data-camera-name");
+              let date = $(this).attr("data-rover-date");
               let items = {
                 id,
                 url,
                 name,
-                fullName,
-                date
+                cameraName,
+                date,
               };
-              console.log(fullName)
               if ($(this).hasClass("liked")) {
-                $(this).css({
-                  "background-color": "transparent",
-                  color: "red",
-                });
+                $(this).addClass('unlied')
+                imageCount--;
+                $(".likedCount").html(`(${imageCount})`);
+                $(".likedImages").find(`#${id}`).remove();
                 $(this).html('<i class="far fa-heart">');
                 $(this).removeClass("liked spin");
                 localStorage.removeItem(id);
               } else {
+                imageCount++;
+                $(".likedCount").html(`(${imageCount})`);
                 $(this).html('<i class="fas fa-heart"></i>');
+                $(this).removeClass('unliked')
                 $(this).addClass("liked spin");
                 $(".likedImages").append(`
-                <div class="col">
+                <div id=${id} class="col">
                 <div class="card shadow-sm">
                     <img src=${url}>
                     <div class="card-body">
                       <h5 class="card-title">${name}</h5>
-                        <p class="card-text">${fullName}</p>
+                        <p class="card-text">${cameraName}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                            <button  id=img-title data-url=title type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
+                            <button type="button" class="btn btn-outline-danger like-btn remove liked"><i class="fas fa-heart"></i></button>
                             </div>
+                            <button id=${intId} data-id=${id} type="button" class="btn btn-success remove">remove</button>
                             <small class="text-muted">${date}</small>
                         </div> 
                     </div>
@@ -239,7 +244,18 @@ $(document).ready(() => {
               </div>`);
                 localStorage.setItem(id, JSON.stringify(items));
               }
+              $(`#${intId}`).on("click", function () {
+                imageCount--
+                $(".likedCount").html(`(${imageCount})`);
+                let dataId = $(this).attr("data-id");
+                $(".likedImages").find(`#${dataId}`).remove();
+                $('.btn-group').find(`#${dataId}`).html('<i class="far fa-heart">').removeClass('liked spin')
+                localStorage.removeItem(dataId);
+            
+              });
+         
             });
+
             idArr.forEach((id) => {
               let likeId = JSON.parse(localStorage.getItem(id));
               if (likeId !== null) {
@@ -257,16 +273,16 @@ $(document).ready(() => {
         });
       }
     });
+ 
     for (let [key, value] of Object.entries(localStorage)) {
-      let images = JSON.parse(value)
-      console.log(images.url)
+      let images = JSON.parse(value);
       $(".likedImages").append(`
       <div class="col">
       <div class="card shadow-sm">
           <img src=${images.url}>
           <div class="card-body">
             <h5 class="card-title">${images.name}</h5>
-              <p class="card-text">${images.fullName}</p>
+              <p class="card-text">${images.cameraName}</p>
               <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                   <button type="button" class="btn btn-outline-danger like-btn liked"><i class="fas fa-heart"></i></button>
