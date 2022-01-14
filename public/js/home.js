@@ -1,3 +1,4 @@
+let imageCount = 0;
 $(document).ready(() => {
   //initializes datepicker using jQuery UI datepicker plugin
   const dateInput = $(".datepicker");
@@ -191,10 +192,10 @@ $(document).ready(() => {
             //When the like button is clicked, it will apply the "like" and "spin" class, giving the button the styles and animation indicating that the picture has been liked.
             //It will also send the ID of the image to local storage. When the page is refreshed, all of the ID's of the images are displayed are compared to the ID's in localStorage
             //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image.
-            let imageCount = 0;
+            
             $(".like-btn").on("click", function () {
               let id = $(this).attr("id");
-              let intId = $(this).attr('data-id')
+              let intId = $(this).attr("data-id");
               let url = $(this).attr("data-url");
               let name = $(this).attr("data-rover-name");
               let cameraName = $(this).attr("data-camera-name");
@@ -205,9 +206,10 @@ $(document).ready(() => {
                 name,
                 cameraName,
                 date,
+                intId,
               };
               if ($(this).hasClass("liked")) {
-                $(this).addClass('unlied')
+                $(this).addClass("unlied");
                 imageCount--;
                 $(".likedCount").html(`(${imageCount})`);
                 $(".likedImages").find(`#${id}`).remove();
@@ -218,7 +220,7 @@ $(document).ready(() => {
                 imageCount++;
                 $(".likedCount").html(`(${imageCount})`);
                 $(this).html('<i class="fas fa-heart"></i>');
-                $(this).removeClass('unliked')
+                $(this).removeClass("unliked");
                 $(this).addClass("liked spin");
                 $(".likedImages").append(`
                 <div id=${id} class="col">
@@ -245,15 +247,16 @@ $(document).ready(() => {
                 localStorage.setItem(id, JSON.stringify(items));
               }
               $(`#${intId}`).on("click", function () {
-                imageCount--
+                imageCount--;
                 $(".likedCount").html(`(${imageCount})`);
                 let dataId = $(this).attr("data-id");
                 $(".likedImages").find(`#${dataId}`).remove();
-                $('.btn-group').find(`#${dataId}`).html('<i class="far fa-heart">').removeClass('liked spin')
+                $(".btn-group")
+                  .find(`#${dataId}`)
+                  .html('<i class="far fa-heart">')
+                  .removeClass("liked spin");
                 localStorage.removeItem(dataId);
-            
               });
-         
             });
 
             idArr.forEach((id) => {
@@ -273,11 +276,11 @@ $(document).ready(() => {
         });
       }
     });
- 
+
     for (let [key, value] of Object.entries(localStorage)) {
       let images = JSON.parse(value);
       $(".likedImages").append(`
-      <div class="col">
+      <div id=${images.id} class="col">
       <div class="card shadow-sm">
           <img src=${images.url}>
           <div class="card-body">
@@ -287,6 +290,7 @@ $(document).ready(() => {
                   <div class="btn-group">
                   <button type="button" class="btn btn-outline-danger like-btn liked"><i class="fas fa-heart"></i></button>
                   </div>
+                  <button id=${images.intId} data-id=${images.id}  type="button" class="btn btn-success remove">remove</button>
                   <small class="text-muted">${images.date}</small>
               </div> 
           </div>
@@ -297,6 +301,18 @@ $(document).ready(() => {
           </div>     
       </div>
     </div>`);
+    $(`#${images.intId}`).on("click", function () {
+      imageCount--;
+      $(".likedCount").html(`(${imageCount})`);
+      let dataId = $(this).attr("data-id");
+      $(".likedImages").find(`#${dataId}`).remove();
+      $(".btn-group")
+        .find(`#${dataId}`)
+        .html('<i class="far fa-heart">')
+        .removeClass("liked spin");
+      localStorage.removeItem(dataId);
+    });
     }
+   
   });
 });
