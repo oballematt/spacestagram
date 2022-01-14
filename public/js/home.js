@@ -1,4 +1,6 @@
 $(document).ready(() => {
+
+  //initializes datepicker using jQuery UI datepicker plugin
   const dateInput = $(".datepicker");
 
   dateInput.datepicker({
@@ -6,15 +8,18 @@ $(document).ready(() => {
     dateFormat: "yy-mm-dd",
   });
 
+
+  //grabs yesterdays date to write the "dateSubheader" class so the user knows the date of the images that are populated when the page loads.
   const today = new Date();
   const yesterday = new Date(today);
 
   yesterday.setDate(yesterday.getDate() - 1);
 
-  today.toDateString();
-
   $(".dateSubhead").text(yesterday.toISOString().slice(0, 10));
 
+//empties the cameraOptions select input any time a new rover is selected so that the new options dont get appened onto the old ones. 
+//Instead the old options will empty and the new options will populate the select input.
+//I use a switch case to change the available camera options depending on what rover the user selects, since not all cameras are available to all rovers.
   $("#roverOptions").on("change", () => {
     $("#cameraOptions").empty();
 
@@ -49,7 +54,8 @@ $(document).ready(() => {
     }
   });
 
- 
+ //First ajax call. This gets called when the page first loads and will populate images based on yesterdays date.
+ //If there are no images available from yesterdats date, A new background image will display telling the user to search for a new date.
   $.ajax({
     url: "/images-default",
     type: "get",
@@ -89,6 +95,10 @@ $(document).ready(() => {
       </div>`);
       });
 
+      //This is the like button functionality. If a picture is not currently liked, it will not contain the "like" class and it will have the css values in the else statement.
+      //When the like button is clicked, it will apply the "like" and "spin" class, giving the button the styles and animation indicating that the picture has been liked.
+      //It will also send the ID of the image to local storage. When the page is refreshed, all of the ID's of the images are displayed are compared to the ID's in localStorage
+      //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image. 
       $(".like-btn").on("click", function () {
         let id = $(this).attr("id");
         let url = $(this).attr("data-url");
@@ -120,6 +130,8 @@ $(document).ready(() => {
         }
       });
     }
+    //Second ajax call. This ajax function will only run after a use has selected a rover, a camera type, and a date. 
+    //If no images are returned, a new background image will appear indicating to the user that the search criteria they have chosen has not returned any images.
     $("#loadRoverImages").on("click", function () {
       const rovers = $("#roverOptions").val();
       const camera = $("#cameraOptions").val();
@@ -172,6 +184,11 @@ $(document).ready(() => {
             </div>
           </div>`);
             });
+
+            //This is the like button functionality. If a picture is not currently liked, it will not contain the "like" class and it will have the css values in the else statement.
+            //When the like button is clicked, it will apply the "like" and "spin" class, giving the button the styles and animation indicating that the picture has been liked.
+            //It will also send the ID of the image to local storage. When the page is refreshed, all of the ID's of the images are displayed are compared to the ID's in localStorage
+            //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image. 
             $(".like-btn").on("click", function () {
               let id = $(this).attr("id");
               let url = $(this).attr("data-url");

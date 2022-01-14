@@ -1,9 +1,3 @@
-:root {
-  --red: rgb(209, 3, 3);
-  --white: #fff;
-  --black: #000;
-}
-
 .background-image {
   background-image: url("/images/galaxy.jpg");
   background-repeat: repeat-y;
