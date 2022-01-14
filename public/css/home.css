@@ -19,6 +19,11 @@
   background-position: 200px -200px
 }
 
+.modal-content{
+  background-image: url("/images/galaxy.jpg");
+  color: white
+}
+
 .roverImageRows .empty {
   margin: 0 auto;
   width: 900px;
