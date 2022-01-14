@@ -250,7 +250,29 @@ $(document).ready(() => {
       }
     });
     for (let [key, value] of Object.entries(localStorage)) {
-      console.log(JSON.parse(`${value}`));
+      let images = JSON.parse(value)
+      console.log(images.url)
+      $(".likedImages").append(`
+      <div class="col">
+      <div class="card shadow-sm">
+          <img src=${images.url}>
+          <div class="card-body">
+            <h5 class="card-title">Title</h5>
+              <p class="card-text">Title</p>
+              <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                  <button  id=img-title data-url=title type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
+                  </div>
+                  <small class="text-muted">title</small>
+              </div> 
+          </div>
+          <div class='card-footer'>
+          <h6>Share to:</h6>
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${images.url}"><i class="fab fa-facebook fa-2x"></i></a>
+            <a target="_blank" href="https://twitter.com/share?url=${images.url}"><i class="fab fa-twitter fa-2x"></i></a>
+          </div>     
+      </div>
+    </div>`);
     }
   });
 });
