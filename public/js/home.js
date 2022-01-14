@@ -1,5 +1,4 @@
 $(document).ready(() => {
-
   //initializes datepicker using jQuery UI datepicker plugin
   const dateInput = $(".datepicker");
 
@@ -7,7 +6,6 @@ $(document).ready(() => {
     changeYear: true,
     dateFormat: "yy-mm-dd",
   });
-
 
   //grabs yesterdays date to write the "dateSubheader" class so the user knows the date of the images that are populated when the page loads.
   const today = new Date();
@@ -17,9 +15,9 @@ $(document).ready(() => {
 
   $(".dateSubhead").text(yesterday.toISOString().slice(0, 10));
 
-//empties the cameraOptions select input any time a new rover is selected so that the new options dont get appened onto the old ones. 
-//Instead the old options will empty and the new options will populate the select input.
-//I use a switch case to change the available camera options depending on what rover the user selects, since not all cameras are available to all rovers.
+  //empties the cameraOptions select input any time a new rover is selected so that the new options dont get appened onto the old ones.
+  //Instead the old options will empty and the new options will populate the select input.
+  //I use a switch case to change the available camera options depending on what rover the user selects, since not all cameras are available to all rovers.
   $("#roverOptions").on("change", () => {
     $("#cameraOptions").empty();
 
@@ -54,22 +52,22 @@ $(document).ready(() => {
     }
   });
 
- //First ajax call. This gets called when the page first loads and will populate images based on yesterdays date.
- //If there are no images available from yesterdats date, A new background image will display telling the user to search for a new date.
+  //First ajax call. This gets called when the page first loads and will populate images based on yesterdays date.
+  //If there are no images available from yesterdats date, A new background image will display telling the user to search for a new date.
   $.ajax({
     url: "/images-default",
     type: "get",
   }).then((response) => {
-    console.log(response)
+    console.log(response);
     const idArr = [];
     $(".lds-roller").hide();
     $(".imageHeader").show();
     if (response.photos.length === 0) {
-      $('body').addClass('empty-default-background')
-      $('body').removeClass('background-image')
+      $("body").addClass("empty-default-background");
+      $("body").removeClass("background-image");
     } else {
-      $('body').removeClass('empty-default-background')
-      $('body').addClass('background-image')
+      $("body").removeClass("empty-default-background");
+      $("body").addClass("background-image");
       response.photos.forEach((img) => {
         idArr.push(`img-${img.id}`);
         $(".roverImageRows").append(`
@@ -98,7 +96,7 @@ $(document).ready(() => {
       //This is the like button functionality. If a picture is not currently liked, it will not contain the "like" class and it will have the css values in the else statement.
       //When the like button is clicked, it will apply the "like" and "spin" class, giving the button the styles and animation indicating that the picture has been liked.
       //It will also send the ID of the image to local storage. When the page is refreshed, all of the ID's of the images are displayed are compared to the ID's in localStorage
-      //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image. 
+      //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image.
       $(".like-btn").on("click", function () {
         let id = $(this).attr("id");
         let url = $(this).attr("data-url");
@@ -130,7 +128,7 @@ $(document).ready(() => {
         }
       });
     }
-    //Second ajax call. This ajax function will only run after a use has selected a rover, a camera type, and a date. 
+    //Second ajax call. This ajax function will only run after a use has selected a rover, a camera type, and a date.
     //If no images are returned, a new background image will appear indicating to the user that the search criteria they have chosen has not returned any images.
     $("#loadRoverImages").on("click", function () {
       const rovers = $("#roverOptions").val();
@@ -155,11 +153,13 @@ $(document).ready(() => {
           $(".cameraSubhead").text(camera);
           $(".dateSubhead").text(date);
           if (response.photos.length === 0) {
-            $('body').addClass('empty-search-background')
-            $('body').removeClass('background-image')
+            $("body").addClass("empty-search-background");
+            $("body").removeClass("background-image");
+            $("body").removeClass("empty-default-background");
           } else {
-            $('body').removeClass('empty-search-background')
-            $('body').addClass('background-image')
+            $("body").removeClass("empty-search-background");
+            $("body").removeClass("empty-default-background");
+            $("body").addClass("background-image");
             response.photos.forEach((img) => {
               idArr.push(`img-${img.id}`);
               $(".roverImageRows").append(`
@@ -188,7 +188,7 @@ $(document).ready(() => {
             //This is the like button functionality. If a picture is not currently liked, it will not contain the "like" class and it will have the css values in the else statement.
             //When the like button is clicked, it will apply the "like" and "spin" class, giving the button the styles and animation indicating that the picture has been liked.
             //It will also send the ID of the image to local storage. When the page is refreshed, all of the ID's of the images are displayed are compared to the ID's in localStorage
-            //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image. 
+            //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image.
             $(".like-btn").on("click", function () {
               let id = $(this).attr("id");
               let url = $(this).attr("data-url");
@@ -208,7 +208,27 @@ $(document).ready(() => {
                 $(this).css({ "background-color": "red", color: "white" });
                 $(this).html('<i class="fas fa-heart"></i>');
                 $(this).addClass("liked spin");
-
+                $(".likedImages").append(`
+                <div class="col">
+                <div class="card shadow-sm">
+                    <img src=${url}>
+                    <div class="card-body">
+                      <h5 class="card-title">Title</h5>
+                        <p class="card-text">Title</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                            <button  id=img-title data-url=title type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
+                            </div>
+                            <small class="text-muted">title</small>
+                        </div> 
+                    </div>
+                    <div class='card-footer'>
+                    <h6>Share to:</h6>
+                      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${url}"><i class="fab fa-facebook fa-2x"></i></a>
+                      <a target="_blank" href="https://twitter.com/share?url=${url}"><i class="fab fa-twitter fa-2x"></i></a>
+                    </div>     
+                </div>
+              </div>`);
                 localStorage.setItem(id, JSON.stringify(items));
               }
             });
@@ -229,5 +249,8 @@ $(document).ready(() => {
         });
       }
     });
+    for (let [key, value] of Object.entries(localStorage)) {
+      console.log(JSON.parse(`${value}`));
+    }
   });
 });

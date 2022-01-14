@@ -83,6 +83,10 @@
   height: 300px;
 }
 
+.likedImage img {
+  height: 300px;
+}
+
 .roverImageRows h4 {
   color: white;
   margin-top: 25%;
