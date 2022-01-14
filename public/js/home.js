@@ -49,16 +49,21 @@ $(document).ready(() => {
     }
   });
 
+ 
   $.ajax({
     url: "/images-default",
     type: "get",
   }).then((response) => {
+    console.log(response)
     const idArr = [];
     $(".lds-roller").hide();
     $(".imageHeader").show();
     if (response.photos.length === 0) {
-      $(".imageContainer").append('<img src="../images/empty.jpg />"');
+      $('body').addClass('empty-default-background')
+      $('body').removeClass('background-image')
     } else {
+      $('body').removeClass('empty-default-background')
+      $('body').addClass('background-image')
       response.photos.forEach((img) => {
         idArr.push(`img-${img.id}`);
         $(".roverImageRows").append(`
@@ -138,10 +143,11 @@ $(document).ready(() => {
           $(".cameraSubhead").text(camera);
           $(".dateSubhead").text(date);
           if (response.photos.length === 0) {
-            $(".roverImageRows").append(
-              '<img class="empty" src="./images/empty.jpg" />'
-            );
+            $('body').addClass('empty-search-background')
+            $('body').removeClass('background-image')
           } else {
+            $('body').removeClass('empty-search-background')
+            $('body').addClass('background-image')
             response.photos.forEach((img) => {
               idArr.push(`img-${img.id}`);
               $(".roverImageRows").append(`

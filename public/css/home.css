@@ -4,11 +4,25 @@
   --black: #000;
 }
 
-body {
+.background-image {
   background-image: url("/images/galaxy.jpg");
   background-repeat: repeat-y;
   background-size: 100% 1000px;
   background-position: bottom 45%;
+}
+
+.empty-search-background{
+  background-image: url("/images/emptyspace.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 1200px;
+  background-position: 200px -200px
+}
+
+.empty-default-background{
+  background-image: url("/images/empty-default.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 1200px;
+  background-position: 200px -200px
 }
 
 .roverImageRows .empty {
@@ -54,6 +68,7 @@ body {
 }
 
 .image-container {
+  height: 100%;
   padding-left: 500px;
 }
 
@@ -94,22 +109,20 @@ body {
   width: 90%;
 }
 
-.spin i{
+.spin i {
   animation-name: spin;
   animation-duration: 400ms;
   animation-iteration-count: 1;
-  animation-timing-function: linear; 
+  animation-timing-function: linear;
 }
-
 
 @keyframes spin {
   from {
-      transform:rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-      transform:rotate(360deg);
+    transform: rotate(360deg);
   }
-
 }
 
 .lds-roller {
@@ -229,7 +242,7 @@ body {
   }
 }
 
-@media (max-width: 875px){
+@media (max-width: 875px) {
   .sidebar-container {
     width: 300px;
   }
@@ -242,16 +255,17 @@ body {
     margin-left: 3px;
   }
 
-  .sidebar-container footer .disclaimer, i {
-  font-size: 15px !important;
+  .sidebar-container footer .disclaimer,
+  i {
+    font-size: 15px !important;
+  }
+
+  .sidebar-container footer .fas {
+    margin-left: 100px !important;
+  }
 }
 
-.sidebar-container footer .fas {
-  margin-left: 100px !important;
-}
-}
-
-@media (max-width: 662px){
+@media (max-width: 662px) {
   .sidebar-container {
     width: 200px;
   }
@@ -265,11 +279,40 @@ body {
     width: 200px;
   }
 
-  .sidebar-container footer .disclaimer, i {
-  font-size: 15px !important;
+  .sidebar-container footer .disclaimer,
+  i {
+    font-size: 15px !important;
+  }
+
+  .sidebar-container footer .fas {
+    margin-left: 55px !important;
+  }
 }
 
-.sidebar-container footer .fas {
-  margin-left: 55px !important;
+@media (min-width: 2000px){
+  .background-image {
+    background-image: url("/images/galaxy.jpg");
+    background-repeat: repeat-y;
+    background-size: 100% 1300px;
+    background-position: bottom 45%;
+  }
+}
+
+@media (min-width: 2000px) {
+  .empty-search-background {
+    background-image: url("/images/emptyspace.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 1500px;
+    background-position: 250px -200px;
+  }
+}
+
+@media (min-width: 2000px) {
+.empty-default-background{
+  background-image: url("/images/empty-default.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 1500px;
+  background-position: 250px -200px;
 }
 }
+
