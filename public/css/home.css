@@ -12,12 +12,6 @@
   background-position: 200px -200px
 }
 
-.empty-default-background{
-  background-image: url("/images/empty-default.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 1200px;
-  background-position: 200px -200px
-}
 
 .modal-content{
   background-image: url("/images/galaxy.jpg");
@@ -329,14 +323,5 @@
     background-size: 100% 1500px;
     background-position: 250px -200px;
   }
-}
-
-@media (min-width: 2000px) {
-.empty-default-background{
-  background-image: url("/images/empty-default.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 1500px;
-  background-position: 250px -200px;
-}
 }
 

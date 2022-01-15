@@ -9,7 +9,7 @@ $(document).ready(() => {
 
   $(".dateSubhead").text(yesterday.toISOString().slice(0, 10));
 
-  //initializes datepicker using jQuery UI datepicker plugin
+  //selector variable for the datepicker 
   const dateInput = $(".datepicker");
 
   //empties the cameraOptions select input any time a new rover is selected so that the new options dont get appened onto the old ones.
@@ -73,6 +73,7 @@ $(document).ready(() => {
     }
   });
 
+  //Button click event that calls the loadImagesByCamera function. All three inputs must be filled out before the ajax call will run.
   $("#loadRoverImages").on("click", function () {
     const rovers = $("#roverOptions").val();
     const camera = $("#cameraOptions").val();
@@ -117,11 +118,10 @@ $(document).ready(() => {
       if (response.photos.length === 0) {
         $("body").addClass("empty-search-background");
         $("body").removeClass("background-image");
-        $("body").removeClass("empty-default-background");
       } else {
         $("body").removeClass("empty-search-background");
-        $("body").removeClass("empty-default-background");
         $("body").addClass("background-image");
+        //When the ajax call return with data, I loop through the response and add a card to the roverImageRow for each data point.
         response.photos.forEach((img) => {
           idArr.push(`img-${img.id}`);
           $(".roverImageRows").append(`
@@ -148,11 +148,8 @@ $(document).ready(() => {
         </div>`);
         });
 
-        //This is the like button functionality. If a picture is not currently liked, it will not contain the "like" class and it will have the css values in the else statement.
-        //When the like button is clicked, it will apply the "like" and "spin" class, giving the button the styles and animation indicating that the picture has been liked.
-        //It will also send the ID of the image to local storage. When the page is refreshed, all of the ID's of the images are displayed are compared to the ID's in localStorage
-        //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image.
-
+       //This is the like button functionality. A button is unliked be default and will contain the css class "unliked". When the like button is clicked, the css class of "liked and spin"
+       //will be added to the button and the "unliked" class will be removed.
         $(".like-btn").on("click", function () {
           let id = $(this).attr("id");
           let intId = $(this).attr("data-id");
@@ -170,6 +167,8 @@ $(document).ready(() => {
             intId,
             colId,
           };
+          //Depending on the classes that the like button has, it will either add or subtract from the liked Image counter and will add or remove images to the liked image modal.
+          //It will also either remove or add the id to localStorage.
           if ($(this).hasClass("liked")) {
             $(this).addClass("unliked");
             imageCount--;
@@ -179,6 +178,7 @@ $(document).ready(() => {
             $(this).removeClass("liked spin");
             localStorage.removeItem(id);
           } else {
+            //For every image that gets liked, a card will append to the liked modal so the user can keep track of their liked images while theyre using the app.
             imageCount++;
             $(".likedCount").html(`(${imageCount})`);
             $(this).html('<i class="fas fa-heart"></i>');
@@ -208,6 +208,8 @@ $(document).ready(() => {
             </div>`);
             localStorage.setItem(id, JSON.stringify(items));
           }
+          //A remove button is added to each image thats appended to the liked image modal. When the remove button is clicked, it finds the id of the column and removes it from the modal.
+          //It also removes the id from localStorage and removes the liked class from the original like button.
           $(`#${intId}`).on("click", function () {
             imageCount--;
             $(".likedCount").html(`(${imageCount})`);
@@ -221,6 +223,10 @@ $(document).ready(() => {
             localStorage.removeItem(dataId);
           });
         });
+
+        //After the ajax call has succesfully finished running, all of the ID's of the images displayed on the page get pushed to the idArr.
+        //This function comares the ID's in the idArr to the ID's in localStorage. If the ID's match, the css class "liked" will be added to the button
+        //so the user can see that they had liked that image from a previous session.
         idArr.forEach((id) => {
           let likeId = JSON.parse(localStorage.getItem(id));
           if (likeId !== null) {
@@ -238,6 +244,7 @@ $(document).ready(() => {
     });
   };
 
+  //This for loop runs on page load. It loops through localStorage and appends a card for each data point into the liked image modal and the roveImageRows section.
   for (let [key, value] of Object.entries(localStorage)) {
     let images = JSON.parse(value);
     imageCount++;
@@ -267,6 +274,8 @@ $(document).ready(() => {
           </div>     
       </div>
     </div>`);
+    //A remove button is added to each image thats appended to the liked image modal. When the remove button is clicked, it finds the id of the column and removes it from the modal.
+    //It also removes the id from localStorage and removes the liked class from the original like button.
       $(`.likedImages #${images.intId}, .roverImageRows #${images.intId}`).on("click", function () {
         imageCount--;
         $(".likedCount").html(`(${imageCount})`);
