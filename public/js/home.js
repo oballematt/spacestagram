@@ -1,4 +1,5 @@
 let imageCount = 0;
+const idArr = [];
 $(document).ready(() => {
   //grabs yesterdays date to write the "dateSubheader" class so the user knows the date of the images that are populated when the page loads.
   const today = new Date();
@@ -13,7 +14,7 @@ $(document).ready(() => {
 
   //empties the cameraOptions select input any time a new rover is selected so that the new options dont get appened onto the old ones.
   //Instead the old options will empty and the new options will populate the select input.
-  //I use a switch case to change the available camera options depending on what rover the user selects, since not all cameras are available to all rovers.
+  //I use a switch case to change the available camera options and the max date allowed on the datepicker depending on what rover the user selects.
   $("#roverOptions").on("change", () => {
     $("#cameraOptions").empty();
 
@@ -80,15 +81,16 @@ $(document).ready(() => {
     if (rovers === null || camera === null || date === "") {
       alert("Please select a Rover, a Camera and a Date.");
     } else {
+      $(".imageSection").find('h1').hide();
       $(".roverImageRows").empty();
       $(".lds-roller").show();
-      loadImages();
+      loadImagesByCamera();
     }
   });
 
-  //Second ajax call. This ajax function will only run after a use has selected a rover, a camera type, and a date.
-  //If no images are returned, a new background image will appear indicating to the user that the search criteria they have chosen has not returned any images.
-  const loadImages = () => {
+  //This ajax call will only run after a use has selected a rover, a camera type, and a date.
+  //If no images are returned from the API, a new background image will appear indicating to the user that the search criteria they have chosen has not returned any images.
+  const loadImagesByCamera = () => {
     const rovers = $("#roverOptions").val();
     const camera = $("#cameraOptions").val();
     const date = $("#date").val();
@@ -106,13 +108,12 @@ $(document).ready(() => {
         }
       },
     }).then((response) => {
-      console.log(response);
       $(".lds-roller").hide();
       $(".imageHeader").show();
       $(".roverSubhead").text(rovers);
       $(".cameraSubhead").text(camera);
       $(".dateSubhead").text(date);
-      const idArr = [];
+
       if (response.photos.length === 0) {
         $("body").addClass("empty-search-background");
         $("body").removeClass("background-image");
@@ -132,7 +133,7 @@ $(document).ready(() => {
                   <p class="card-text">${img.camera.full_name}</p>
                   <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
-                      <button id=img-${img.id} data-id=${img.id} data-rover-name=${img.rover.name} data-camera-name=${img.camera.name} data-rover-date=${img.earth_date}
+                      <button id=img-${img.id} data-col-id=col-${img.id} data-id=${img.id} data-rover-name=${img.rover.name} data-camera-name=${img.camera.name} data-rover-date=${img.earth_date}
                       data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
                       </div>
                       <small class="text-muted">${img.earth_date}</small>
@@ -155,6 +156,7 @@ $(document).ready(() => {
         $(".like-btn").on("click", function () {
           let id = $(this).attr("id");
           let intId = $(this).attr("data-id");
+          let colId = $(this).attr("data-col-id");
           let url = $(this).attr("data-url");
           let name = $(this).attr("data-rover-name");
           let cameraName = $(this).attr("data-camera-name");
@@ -166,12 +168,13 @@ $(document).ready(() => {
             cameraName,
             date,
             intId,
+            colId,
           };
           if ($(this).hasClass("liked")) {
             $(this).addClass("unliked");
             imageCount--;
             $(".likedCount").html(`(${imageCount})`);
-            $(".likedImages").find(`#${id}`).remove();
+            $(".likedImages").find(`#${colId}`).remove();
             $(this).html('<i class="far fa-heart">');
             $(this).removeClass("liked spin");
             localStorage.removeItem(id);
@@ -182,7 +185,7 @@ $(document).ready(() => {
             $(this).removeClass("unliked");
             $(this).addClass("liked spin");
             $(".likedImages").append(`
-              <div id=${id} class="col">
+              <div id=${colId} class="col">
               <div class="card shadow-sm">
                   <img src=${url}>
                   <div class="card-body">
@@ -191,8 +194,8 @@ $(document).ready(() => {
                       <div class="d-flex justify-content-between align-items-center">
                           <div class="btn-group">
                           <button disabled type="button" class="btn btn-outline-danger like-btn remove liked"><i class="fas fa-heart"></i></button>
+                          <button id=${intId} data-id=${id} data-col-id=${colId} type="button" class="btn btn-success remove">Remove</button>
                           </div>
-                          <button id=${intId} data-id=${id} type="button" class="btn btn-success remove">Remove</button>
                           <small class="text-muted">${date}</small>
                       </div> 
                   </div>
@@ -209,16 +212,15 @@ $(document).ready(() => {
             imageCount--;
             $(".likedCount").html(`(${imageCount})`);
             let dataId = $(this).attr("data-id");
-            $(".likedImages").find(`#${dataId}`).remove();
-            $(".btn-group")
-              .find(`#${dataId}`)
+            let colId = $(this).attr("data-col-id");
+            $(".likedImages").find(`#${colId}`).remove();
+            $(`#${dataId}`)
               .html('<i class="far fa-heart">')
               .removeClass("liked spin")
               .addClass("unliked");
             localStorage.removeItem(dataId);
           });
         });
-
         idArr.forEach((id) => {
           let likeId = JSON.parse(localStorage.getItem(id));
           if (likeId !== null) {
@@ -239,9 +241,11 @@ $(document).ready(() => {
   for (let [key, value] of Object.entries(localStorage)) {
     let images = JSON.parse(value);
     imageCount++;
-    $(".likedCount").html(`(${imageCount})`);
-    $(".likedImages").append(`
-      <div id=${images.id} class="col">
+    console.log(images);
+ 
+      $(".likedCount").html(`(${imageCount})`);
+      $(".likedImages, .roverImageRows").append(`
+      <div id=${images.colId} class="col">
       <div class="card shadow-sm">
           <img src=${images.url}>
           <div class="card-body">
@@ -250,8 +254,9 @@ $(document).ready(() => {
               <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                   <button disabled type="button" class="btn btn-outline-danger like-btn liked"><i class="fas fa-heart"></i></button>
-                  </div>
                   <button id=${images.intId} data-id=${images.id}  type="button" class="btn btn-success remove">Remove</button>
+                  </div>
+                 
                   <small class="text-muted">${images.date}</small>
               </div> 
           </div>
@@ -262,17 +267,16 @@ $(document).ready(() => {
           </div>     
       </div>
     </div>`);
-    $(`#${images.intId}`).on("click", function () {
-      imageCount--;
-      $(".likedCount").html(`(${imageCount})`);
-      let dataId = $(this).attr("data-id");
-      $(".likedImages").find(`#${dataId}`).remove();
-      $(".btn-group")
-        .find(`#${dataId}`)
-        .html('<i class="far fa-heart">')
-        .removeClass("liked spin")
-        .addClass("unliked");
-      localStorage.removeItem(dataId);
-    });
+      $(`.likedImages #${images.intId}, .roverImageRows #${images.intId}`).on("click", function () {
+        imageCount--;
+        $(".likedCount").html(`(${imageCount})`);
+        let dataId = $(this).attr("data-id");
+        $(".likedImages, .roverImageRows").find(`#${images.colId}`).remove();
+        $(`#${dataId}`)
+          .html('<i class="far fa-heart">')
+          .removeClass("liked spin")
+          .addClass("unliked");
+        localStorage.removeItem(dataId);
+      });
   }
 });

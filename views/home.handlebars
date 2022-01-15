@@ -29,8 +29,9 @@
                 placeholder="yyyy/mm/dd" aria-label="Model Start Date" aria-describedby="addon-wrapping">
         </div>
         <button id="loadRoverImages" type="button" class='btn btn-primary mt-4 w-100'>Load Images</button>
-        <button type="button" class="btn btn-primary mt-5 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            View Your Liked Images <span class='likedCount'></span>
+        <hr>
+        <button type="button" class="btn btn-primary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            View Your Liked Images <span class='likedCount'>(0)</span>
         </button>
         <footer>
             <div class='disclaimer'>Logo created by <a style="color:white" href="https://www.designevo.com/"
@@ -87,6 +88,7 @@
 
     <section class="py-5 imageSection">
         <div class="container-fluid">
+            <h1 class='text-white'>Your previously liked images:</h1>
             <figure
                 class="row row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-3 roverImageRows">
             </figure>

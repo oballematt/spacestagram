@@ -3,6 +3,6 @@ const roversController = require('../controllers/marsRover')
 
 router.post('/images-by-camera', roversController.getImagesByCamera)
 
-router.post('/images-default', roversController.getDefaultImages)
+router.get('/images-default', roversController.getDefaultImages)
 
 module.exports = router

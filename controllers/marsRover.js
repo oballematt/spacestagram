@@ -26,10 +26,10 @@ module.exports = {
 
     yesterday.setDate(yesterday.getDate() - 1);
 
-    const { rovers, camera, date } = req.body;
-
     try {
-      const roverPictures = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2022-01-11&api_key=${process.env.APIKEY}`;
+      const roverPictures = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${yesterday
+        .toISOString()
+        .slice(0, 10)}&api_key=${process.env.APIKEY}`;
       const response = await axios.get(roverPictures);
       return res.json(response.data);
     } catch (error) {

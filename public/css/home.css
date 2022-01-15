@@ -24,9 +24,15 @@
   color: white
 }
 
-/* .carousel-item {
-  height: 35rem;
-} */
+.btn-close {
+  background-color: white;
+}
+
+.liked:disabled{
+  background-color: red;
+  color: white
+}
+
 
 .roverImageRows .empty {
   margin: 0 auto;
@@ -99,7 +105,8 @@
 }
 
 .unliked{
-  background-color: transparent;
+  background-color: transparent !important;
+  color: red !important;
 }
 
 .likedImages img {
