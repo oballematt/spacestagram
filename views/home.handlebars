@@ -30,9 +30,9 @@
         </div>
         <button id="loadRoverImages" type="button" class='btn btn-primary mt-4 w-100'>Load Images</button>
         <button type="button" class="btn btn-primary mt-5 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            View Your Liked Images
+            View Your Liked Images <span class='likedCount'></span>
         </button>
-        
+
         <footer>
             <div class='disclaimer'>Logo created by <a style="color:white" href="https://www.designevo.com/"
                     title="Free Online Logo Maker">DesignEvo logo
@@ -47,8 +47,8 @@
     </div>
 </aside>
 <main class='image-container'>
+    {{!-- {{> apodCarousel}} --}}
     <header class='imageHeader' style='display: none'>
-        <h4 class='text-white'>You are viewing images from:</h4>
         <ul class="list-group list-group-horizontal">
             <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
@@ -75,7 +75,7 @@
             </li>
         </ul>
     </header>
-     {{> likedImagesModal}}
+    {{> likedImagesModal}}
     <figure style="display: none;" class="lds-roller">
         <div></div>
         <div></div>
@@ -94,5 +94,5 @@
             </figure>
         </div>
     </section>
-    
+
 </main>

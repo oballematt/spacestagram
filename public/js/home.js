@@ -1,3 +1,4 @@
+let imageCount = 0;
 $(document).ready(() => {
   //initializes datepicker using jQuery UI datepicker plugin
   const dateInput = $(".datepicker");
@@ -52,123 +53,19 @@ $(document).ready(() => {
     }
   });
 
-  //First ajax call. This gets called when the page first loads and will populate images based on yesterdays date.
-  //If there are no images available from yesterdats date, A new background image will display telling the user to search for a new date.
   // $.ajax({
-  //   url: "/images-default",
-  //   type: "get",
-  // }).then((response) => {
-  //   console.log(response);
+  //   url: '/apod',
+  //   type: 'GET'
+  // }).then(response => {
+  //   console.log(response)
+  //   $('.apod1').attr('src', response[0].hdurl)
+  //   $('apodDescription1').html(`<h5>${response[0].explanation}</h5>`)
+  //   $('.apod2').attr('src', response[1].hdurl)
+  //   $('.apod3').attr('src', response[2].hdurl)
+  //   $('.apod4').attr('src', response[3].hdurl)
+  //   $('.apod5').attr('src', response[4].hdurl)
+  // })
 
-  //   $(".lds-roller").hide();
-  //   $(".imageHeader").show();
-  //   if (response.photos.length === 0) {
-  //     $("body").addClass("empty-default-background");
-  //     $("body").removeClass("background-image");
-  //   } else {
-  //     $("body").removeClass("empty-default-background");
-  //     $("body").addClass("background-image");
-  //     response.photos.forEach((img) => {
-  //       idArr.push(`img-${img.id}`);
-  //       $(".roverImageRows").append(`
-  //       <div class="col">
-  //       <div class="card shadow-sm">
-  //           <img src=${img.img_src}>
-  //           <div class="card-body">
-  //             <h5 class="card-title">${img.rover.name}</h5>
-  //               <p class="card-text">${img.camera.full_name}</p>
-  //               <div class="d-flex justify-content-between align-items-center">
-  //                   <div class="btn-group">
-  //                   <button id=img-${img.id} data-id=${img.id} data-rover-name=${img.rover.name} data-camera-name=${img.camera.name} data-rover-date=${img.earth_date}
-  //                   data-url=${img.img_src} type="button" class="btn btn-outline-danger like-btn"><i class="far fa-heart"></i></button>
-  //                   </div>
-  //                   <small class="text-muted">${img.earth_date}</small>
-  //               </div>
-  //           </div>
-  //           <div class='card-footer'>
-  //           <h6>Share to:</h6>
-  //             <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${img.img_src}"><i class="fab fa-facebook fa-2x"></i></a>
-  //             <a target="_blank" href="https://twitter.com/share?url=${img.img_src}"><i class="fab fa-twitter fa-2x"></i></a>
-  //           </div>
-  //       </div>
-  //     </div>`);
-  //     });
-
-  //     //This is the like button functionality. If a picture is not currently liked, it will not contain the "like" class and it will have the css values in the else statement.
-  //     //When the like button is clicked, it will apply the "like" and "spin" class, giving the button the styles and animation indicating that the picture has been liked.
-  //     //It will also send the ID of the image to local storage. When the page is refreshed, all of the ID's of the images are displayed are compared to the ID's in localStorage
-  //     //If the ID's are a match, the "like" class will be applied to the like button, indicating that the user has previously liked that image.
-  //     $(".like-btn").on("click", function () {
-  //       let id = $(this).attr("id");
-  //       let intId = $(this).attr("data-id");
-  //       let url = $(this).attr("data-url");
-  //       let name = $(this).attr("data-rover-name");
-  //       let cameraName = $(this).attr("data-camera-name");
-  //       let date = $(this).attr("data-rover-date");
-  //       let items = {
-  //         id,
-  //         url,
-  //         name,
-  //         cameraName,
-  //         date,
-  //         intId,
-  //       };
-  //       if ($(this).hasClass("liked")) {
-  //         $(this).addClass("unliked");
-  //         $(".likedImages").find(`#${id}`).remove();
-  //         $(this).html('<i class="far fa-heart">');
-  //         $(this).removeClass("liked spin");
-  //         localStorage.removeItem(id);
-  //       } else {
-  //         $(this).html('<i class="fas fa-heart"></i>');
-  //         $(this).removeClass("unliked");
-  //         $(this).addClass("liked spin");
-  //         $(".likedImages").append(`
-  //         <div id=${id} class="col">
-  //         <div class="card shadow-sm">
-  //             <img src=${url}>
-  //             <div class="card-body">
-  //               <h5 class="card-title">${name}</h5>
-  //                 <p class="card-text">${cameraName}</p>
-  //                 <div class="d-flex justify-content-between align-items-center">
-  //                     <div class="btn-group">
-  //                     <button disabled type="button" class="btn btn-outline-danger like-btn remove liked"><i class="fas fa-heart"></i></button>
-  //                     </div>
-  //                     <button id=${intId} data-id=${id} type="button" class="btn btn-success remove">Remove</button>
-  //                     <small class="text-muted">${date}</small>
-  //                 </div>
-  //             </div>
-  //             <div class='card-footer'>
-  //             <h6>Share to:</h6>
-  //               <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${url}"><i class="fab fa-facebook fa-2x"></i></a>
-  //               <a target="_blank" href="https://twitter.com/share?url=${url}"><i class="fab fa-twitter fa-2x"></i></a>
-  //             </div>
-  //         </div>
-  //       </div>`);
-  //         localStorage.setItem(id, JSON.stringify(items));
-  //       }
-  //       $(`#${intId}`).on("click", function () {
-  //         let dataId = $(this).attr("data-id");
-  //         $(".likedImages").find(`#${dataId}`).remove();
-  //         $(".btn-group")
-  //           .find(`#${dataId}`)
-  //           .html('<i class="far fa-heart">')
-  //           .removeClass("liked spin")
-  //           .addClass("unliked");
-  //         localStorage.removeItem(dataId);
-  //       });
-  //     });
-  //     idArr.forEach((id) => {
-  //       let likeId = JSON.parse(localStorage.getItem(id));
-  //       if (likeId !== null) {
-  //         if (likeId.id === id) {
-  //           $(`#${id}`).css({ "background-color": "red", color: "white" });
-  //           $(`#${id}`).html('<i class="fas fa-heart"></i>');
-  //           $(`#${id}`).addClass("liked");
-  //         }
-  //       }
-  //     });
-  //   }
   //Second ajax call. This ajax function will only run after a use has selected a rover, a camera type, and a date.
   //If no images are returned, a new background image will appear indicating to the user that the search criteria they have chosen has not returned any images.
   $("#loadRoverImages").on("click", function () {
@@ -253,11 +150,15 @@ $(document).ready(() => {
             };
             if ($(this).hasClass("liked")) {
               $(this).addClass("unliked");
+              imageCount--;
+              $(".likedCount").html(`(${imageCount})`);
               $(".likedImages").find(`#${id}`).remove();
               $(this).html('<i class="far fa-heart">');
               $(this).removeClass("liked spin");
               localStorage.removeItem(id);
             } else {
+              imageCount++;
+              $(".likedCount").html(`(${imageCount})`);
               $(this).html('<i class="fas fa-heart"></i>');
               $(this).removeClass("unliked");
               $(this).addClass("liked spin");
@@ -286,6 +187,8 @@ $(document).ready(() => {
               localStorage.setItem(id, JSON.stringify(items));
             }
             $(`#${intId}`).on("click", function () {
+              imageCount--;
+              $(".likedCount").html(`(${imageCount})`);
               let dataId = $(this).attr("data-id");
               $(".likedImages").find(`#${dataId}`).remove();
               $(".btn-group")
@@ -317,6 +220,8 @@ $(document).ready(() => {
 
   for (let [key, value] of Object.entries(localStorage)) {
     let images = JSON.parse(value);
+    imageCount++;
+    $(".likedCount").html(`(${imageCount})`);
     $(".likedImages").append(`
       <div id=${images.id} class="col">
       <div class="card shadow-sm">
@@ -340,6 +245,8 @@ $(document).ready(() => {
       </div>
     </div>`);
     $(`#${images.intId}`).on("click", function () {
+      imageCount--;
+    $(".likedCount").html(`(${imageCount})`);
       let dataId = $(this).attr("data-id");
       $(".likedImages").find(`#${dataId}`).remove();
       $(".btn-group")
@@ -350,5 +257,4 @@ $(document).ready(() => {
       localStorage.removeItem(dataId);
     });
   }
-  // });
 });
