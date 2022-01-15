@@ -51,7 +51,7 @@ $(document).ready(() => {
         dateInput.datepicker({
           changeYear: true,
           dateFormat: "yy-mm-dd",
-          maxDate: "2018-07-09",
+          maxDate: "2018-06-09",
         });
         break;
       case "Spirit":
