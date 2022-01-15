@@ -20,21 +20,23 @@ module.exports = {
     }
   },
 
-  getDefaultImages: async (req, res) => {
-    const today = new Date();
-    const yesterday = new Date(today);
+  //Leaving this controller commented out in case I want to use it in the future.
+  
+  // getDefaultImages: async (req, res) => {
+  //   const today = new Date();
+  //   const yesterday = new Date(today);
 
-    yesterday.setDate(yesterday.getDate() - 1);
+  //   yesterday.setDate(yesterday.getDate() - 1);
 
-    try {
-      const roverPictures = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${yesterday
-        .toISOString()
-        .slice(0, 10)}&api_key=${process.env.APIKEY}`;
-      const response = await axios.get(roverPictures);
-      return res.json(response.data);
-    } catch (error) {
-      console.error(error);
-      return res.json(error);
-    }
-  },
+  //   try {
+  //     const roverPictures = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=${yesterday
+  //       .toISOString()
+  //       .slice(0, 10)}&api_key=${process.env.APIKEY}`;
+  //     const response = await axios.get(roverPictures);
+  //     return res.json(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //     return res.json(error);
+  //   }
+  // },
 };
