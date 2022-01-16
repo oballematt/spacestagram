@@ -127,7 +127,7 @@ $(document).ready(() => {
           $(".roverImageRows").append(`
           <div class="col">
           <div class="card shadow-sm">
-              <img src=${img.img_src}>
+              <img alt="rover image taken with a specific camera" src=${img.img_src}>
               <div class="card-body">
                 <h5 class="card-title">${img.rover.name}</h5>
                   <p class="card-text">${img.camera.full_name}</p>
@@ -187,7 +187,7 @@ $(document).ready(() => {
             $(".likedImages").append(`
               <div id=${colId} class="col">
               <div class="card shadow-sm">
-                  <img src=${url}>
+                  <img alt="rover image taken with a specific camera" src=${url}>
                   <div class="card-body">
                     <h5 class="card-title">${name}</h5>
                       <p class="card-text">${cameraName}</p>
@@ -254,7 +254,7 @@ $(document).ready(() => {
       $(".likedImages, .roverImageRows").append(`
       <div id=${images.colId} class="col">
       <div class="card shadow-sm">
-          <img src=${images.url}>
+          <img alt="rover image taken with a specific camera" src=${images.url}>
           <div class="card-body">
             <h5 class="card-title">${images.name}</h5>
               <p class="card-text">${images.cameraName}</p>
